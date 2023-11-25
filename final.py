@@ -1,6 +1,4 @@
-# server.py
-
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 from PIL import Image
 import numpy as np
 import tensorflow as tf
@@ -9,7 +7,7 @@ app = Flask(__name__)
 
 # Load your pre-trained machine learning model
 # Replace this with the actual loading code for your model
-model = tf.keras.models.load_model('./object_classifier')
+model = tf.keras.models.load_model('./object_classifier.h5')
 
 def preprocess_image(image_path):
     # Replace this with the actual preprocessing code for your model
@@ -18,6 +16,10 @@ def preprocess_image(image_path):
     img_array = np.array(img)
     img_array = img_array / 255.0  # Normalize pixel values
     return np.expand_dims(img_array, axis=0)
+
+@app.route('/')
+def index():
+    return render_template('scanner.html')
 
 @app.route('/compare', methods=['POST'])
 def compare_images():
