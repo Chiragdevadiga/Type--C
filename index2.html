@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Origami Model Recognition</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #imageInput {
+            display: none; /* Hide the default file input */
+        }
+
+        #uploadButton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Origami Model Recognition</h1>
+    <label for="imageInput">
+        <input type="file" id="imageInput" accept="image/*">
+        <span id="uploadButton">Upload Image</span>
+    </label>
+    <p id="result"></p>
+
+    <script>
+        function uploadImage() {
+            var input = document.getElementById('imageInput');
+            var file = input.files[0];
+
+            if (file) {
+                var formData = new FormData();
+                formData.append('file', file);
+
+                fetch('http://localhost:5000/predict', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = 'Predicted Model: ' + data.predicted_model;
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                alert('Please select an image file');
+            }
+        }
+
+        // Trigger uploadImage function when the label is clicked
+        document.getElementById('uploadButton').addEventListener('click', uploadImage);
+    </script>
+</body>
+</html>
