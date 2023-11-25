@@ -3,8 +3,18 @@ body {
     margin: 20px;
 }
 
+#title-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
 #video-container {
+    margin-top: 60px; /* Adjust this value based on your title container height */
     display: flex;
     flex-wrap: wrap;
 }
@@ -14,3 +24,4 @@ iframe {
     height: 200px;
     margin: 10px;
 }
+
